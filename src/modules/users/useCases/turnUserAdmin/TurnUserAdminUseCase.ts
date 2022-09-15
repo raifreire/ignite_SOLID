@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { User } from "../../model/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -6,10 +7,17 @@ interface IRequest {
 }
 
 class TurnUserAdminUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User {
-    // Complete aqui
+
+    const idUser = this.usersRepository.findById(user_id);
+
+    if (!idUser) {
+      throw new Error("user not exists");
+    }
+
+    return this.usersRepository.turnAdmin(idUser);
   }
 }
 
