@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { User } from "../../model/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -6,10 +7,17 @@ interface IRequest {
 }
 
 class ShowUserProfileUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User {
-    // Complete aqui
+
+    const userIdAlreadyExists = this.usersRepository.findById(user_id);
+
+    if (!userIdAlreadyExists) {
+      throw new Error("Id Not Exists");
+    }
+
+    return userIdAlreadyExists;
   }
 }
 
