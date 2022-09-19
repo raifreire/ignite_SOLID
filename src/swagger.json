@@ -1,0 +1,51 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "RentalX Documentation",
+        "description": "This is an API Rent",
+        "Version": "1.0.0",
+        "Contact": {
+            "email": "jhondoe@rocketseat.com.br"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "sumary": "Create User",
+                "description": "Create new user in system",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "User Name Sample",
+                                    "description": "User description sample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "User already Exists"
+                    }
+                }
+            }
+        }
+    }
+}
