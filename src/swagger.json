@@ -25,13 +25,13 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "description": {
+                                    "email": {
                                         "type": "string"
                                     }
                                 },
                                 "example": {
                                     "name": "User Name Sample",
-                                    "description": "User description sample"
+                                    "email": "jhondoe@example.com"
                                 }
                             }
                         }
@@ -39,19 +39,50 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "7739d0fc-b2b5-432a-a8f9-94f7678ae7c4",
+                                        "admin": false,
+                                        "name": "example",
+                                        "created_at": "2022-09-21T00:39:38.391Z",
+                                        "updated_at": "2022-09-21T00:39:38.391Z"
+                                    }
+                                }
+                            }
+                        }
                     },
-                    "500": {
+                    "400": {
                         "description": "User already Exists"
                     }
                 }
             },
             "get": {
                 "tags": [
-                    "User"
+                    "Users"
                 ],
                 "summary": "List all users",
                 "description": "List all users",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "headers",
+                        "description": "user id is required",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "success",
@@ -62,10 +93,25 @@
                                     "items": {
                                         "type": "object",
                                         "properties": {
-                                            "name": {
+                                            "id_user": {
                                                 "type": "string"
-                                            },
-                                            "description": {
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "user id not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "error",
+                                    "items": {
+                                        "type": "error message",
+                                        "properties": {
+                                            "id_user": {
                                                 "type": "string"
                                             }
                                         }
@@ -77,135 +123,128 @@
                 }
             }
         },
-        "/user/{username}": {
+        "/users/{user_id}": {
             "get": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get user by user name",
-                "description": "",
-                "operationId": "getUserByName",
-                "produces": [
-                    "application/json",
-                    "application/xml"
-                ],
+                "summary": "List especify user",
+                "description": "List especify user by user id",
                 "parameters": [
                     {
-                        "name": "username",
+                        "name": "user_id",
                         "in": "path",
-                        "description": "The name that needs to be fetched. Use user1 for testing. ",
+                        "description": "user id is required",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid username supplied"
-                    },
-                    "404": {
-                        "description": "User not found"
-                    }
-                }
-            }
-        },
-        "/user/login": {
-            "get": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Logs user into the system",
-                "description": "",
-                "operationId": "loginUser",
-                "produces": [
-                    "application/json",
-                    "application/xml"
-                ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "query",
-                        "description": "The user name for login",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "The password for login in clear text",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "headers": {
-                            "X-Expires-After": {
-                                "type": "string",
-                                "format": "date-time",
-                                "description": "date in UTC when token expires"
-                            },
-                            "X-Rate-Limit": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "calls per hour allowed by the user"
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "7739d0fc-b2b5-432a-a8f9-94f7678ae7c4",
+                                        "admin": false,
+                                        "name": "example",
+                                        "created_at": "2022-09-21T00:39:38.391Z",
+                                        "updated_at": "2022-09-21T00:39:38.391Z"
+                                    }
+                                }
                             }
-                        },
-                        "schema": {
-                            "type": "string"
                         }
                     },
                     "400": {
-                        "description": "Invalid username/password supplied"
+                        "description": "user id not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "error",
+                                    "items": {
+                                        "type": "error message",
+                                        "properties": {
+                                            "id_user": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/user:id": {
+        "/users/{user_id}/admin": {
             "patch": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Updated user",
-                "description": "This can only be done by the logged in user.",
-                "operationId": "updateUser",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json",
-                    "application/xml"
-                ],
+                "summary": "add admin ",
+                "description": "this can turn a not admin user, for admin user",
                 "parameters": [
                     {
-                        "name": "username",
+                        "name": "user_id",
                         "in": "path",
-                        "description": "name that need to be updated",
+                        "description": "user id is required",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Updated user object",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
                     }
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Invalid user supplied"
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "7739d0fc-b2b5-432a-a8f9-94f7678ae7c4",
+                                        "admin": true,
+                                        "name": "example",
+                                        "created_at": "2022-09-21T00:39:38.391Z",
+                                        "updated_at": "2022-09-21T00:39:38.391Z"
+                                    }
+                                }
+                            }
+                        }
                     },
-                    "404": {
-                        "description": "User not found"
+                    "400": {
+                        "description": "user id not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "error",
+                                    "items": {
+                                        "type": "error message",
+                                        "properties": {
+                                            "id_user": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
